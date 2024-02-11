@@ -1,18 +1,21 @@
 import "bootstrap/scss/bootstrap.scss";
 import dynamic from 'next/dynamic'
-import ContainerCards from '../app/components/card/container';
-import './globals.css';
-import BarChartNoSSRRenderer from "../app/components/chart/engines/bar-chart-renderer";
-import PieChartNoSSRRenderer from "../app/components/chart/engines/pie-chart-renderer";
 import Card from 'react-bootstrap/Card';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import Badge from 'react-bootstrap/Badge';
 
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+import './globals.css';
+import BarChartNoSSRRenderer from "@/app/components/chart/engines/bar-chart-renderer";
+import PieChartNoSSRRenderer from "@/app/components/chart/engines/pie-chart-renderer";
+import ContainerCards from '@/app/components/card/container';
 import dictionary from '@/app/dictionary/en';
-import CardWrapper from '../app/components/card/card';
+import CardWrapper from '@/app/components/card/card';
 
 export default function Home(props: { data: any} ) {
-    const ChartNoSSRR = dynamic(() => import("../app/components/chart/chart"))
+    const ChartNoSSR = dynamic(() => import("../app/components/chart/chart"))
     return(
         <>
             {/*TOOD - move to layout, when nested routes will be added*/}
@@ -22,17 +25,31 @@ export default function Home(props: { data: any} ) {
                 </Container>
             </Navbar>
             <Container>
-                <div className="my-6">
-                    {dictionary['homepage-title']}
+                <div className="my-6 flex justify-between items-stretch">
+                    <span className="inline-block">{dictionary['homepage-title']}</span>
+                    <div>
+                        <Badge>
+                            <span className="inline-block mr-2">{dictionary["export-to-pdf"]}</span>
+                            <i className="bi bi-download"/>
+                        </Badge>
+                        <Badge className="ml-2">
+                            <span className="inline-block mr-2">{dictionary["news"]}</span>
+                            <span className="mr-2">3</span>
+                            <i className="bi bi-card-text"/>
+                        </Badge>
+                        <Badge className="ml-2" >
+                            <span className="inline-block mr-2">{dictionary["filter"]}</span>
+                            <Badge bg="secondary" className="mr-2">3</Badge>
+                            <i className="bi bi-filter"/>
+                        </Badge>
+                    </div>
                 </div>
                 <ContainerCards>
-                    <CardWrapper data={props.data}>
-                        <Card.Title>Bar Chart</Card.Title>
-                        <ChartNoSSRR renderer={BarChartNoSSRRenderer} data={props.data.data}></ChartNoSSRR>
+                    <CardWrapper title="Bar Chart" data={props.data}>
+                        <ChartNoSSR renderer={BarChartNoSSRRenderer} data={props.data.data}></ChartNoSSR>
                     </CardWrapper>
-                    <CardWrapper data={props.data}>
-                        <Card.Title>Pie Chart</Card.Title>
-                        <ChartNoSSRR renderer={PieChartNoSSRRenderer} data={props.data.data}></ChartNoSSRR>
+                    <CardWrapper title="Pie Chart" data={props.data}>
+                        <ChartNoSSR renderer={PieChartNoSSRRenderer} data={props.data.data}></ChartNoSSR>
                     </CardWrapper>
                 </ContainerCards>
             </Container>
