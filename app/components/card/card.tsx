@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import bootstrap from 'bootstrap'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Image from 'next/Image';
+import Image from 'next/image';
 import meImage from '@/public/next.svg'
 
 function CardWrapper({data, children, title}: { data: any, children: React.ReactNode, title: string}) {
